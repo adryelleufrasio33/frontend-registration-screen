@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import GlobalStyle from "./Styles/global";
-import MyForm from "./components/myform"; // Ajustado para 'myform'
+import MyForm from "./components/EmployeeForm"; 
 import Grid from "./components/Grid";
 import SalaryForm from "./components/SalaryForm";
 import SalaryGrid from "./components/SalaryGrid";
@@ -81,7 +81,9 @@ function App() {
       setUsers(usersData.data);
       alert(res.data.message)
     } catch (error) {
+      alert(error.response.data.error)
       console.error("Erro ao cadastrar o funcionário:", error.message);
+
     }
   };
   // Requisição GET para buscar salários
@@ -124,7 +126,7 @@ function App() {
           />
           <Route
             path="/salarios"
-            element={<SalaryForm getUsers={getUsers} />}
+            element={<SalaryForm postSalary={postSalary} />}
           />
           <Route
             path="/consultar-salarios"
@@ -135,5 +137,20 @@ function App() {
     </Router>
   );
 }
+
+const postSalary = async (url,formData) => {
+  
+
+
+  try {
+    const res = await axios.post(url, formData);
+
+   
+   
+  //  alert(res.data.message)
+  } catch (error) {
+    console.error("Erro ao cadastrar o sálario:", error.message);
+  }
+};
 
 export default App;
